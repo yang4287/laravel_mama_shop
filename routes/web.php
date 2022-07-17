@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\adminController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,7 +28,7 @@ Route::get('/admin/product', function () {
     return view('admin.product');
 });
 
-Route::get('/product_info',[adminController::class, 'all_info_product']);
-Route::post('/update_product_save',[adminController::class, 'update_commodity_save']);
-Route::post('/add_product_save',[adminController::class, 'add_commodity_save']);
-Route::post('/delete_product',[adminController::class, 'delete_commodity']);
+Route::get('/product_info',[ProductController::class, 'index']);
+Route::post('/update_product_save',[ProductController::class, 'update']);
+Route::post('/add_product_save',[ProductController::class, 'add_commodity_save']);
+Route::post('/delete_product',[ProductController::class, 'delete_commodity']);
