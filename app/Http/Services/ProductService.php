@@ -10,6 +10,15 @@ class ProductService {
     
 
     public function add($input) {
+        $input->validate([
+            'id' => 'required|unique:product',
+          
+        ]);
+        // if ( str_contains($id,'../') || str_contains(urlencode ( $id ),'..%2F')){
+        //     throw ValidationException::withMessages([
+        //         'field' => 'id輸入有誤',
+        //     ]);
+        // }
         $product = new Product([
             'id' => $input['id'],
             'name' =>$input['name'],
@@ -35,10 +44,15 @@ class ProductService {
     }
 
     public function delete($id) { //此刪除連Image資料表一起刪除
+        if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
+            throw ValidationException::withMessages([
+                'field' => 'id輸入有誤',
+            ]);
+        }
         Product::destroy($id);
         
         
-        Storage::deleteDirectory('/public/image/commodity/'.$id);
+        Storage::deleteDirectory('/public/image/product/'.$id);
         
         
     }

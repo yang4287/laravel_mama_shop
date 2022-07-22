@@ -3,53 +3,75 @@
 
 namespace App\Http\Services;
 
-use App\Models\Product_image;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 
+class ProductImageService
+{
 
-class ProductImageService {
-    
 
-    public function index($id) {
-        
-        return Product_image::where('product_id', $id)->get();;
+    public function index($id)
+    {
+
+        return ProductImage::where('product_id', $id)->get();
     }
-    public function add($id,$image,$order) {
-        
+    public function add($id, $image, $order)
+    {
+
         if (!is_null($image['path'])) { //判斷是否有上傳照片
+            if (str_contains($image['path'], 'image')) { //判斷是否為相片
+                $path = '../storage/image/product/' . $id . '/' . $id . '_' .  strval($order) . '.jpg'; //儲存在資料庫的路徑
 
-        $path = '../storage/image/commodity/' .$id . '/' .$id . '_' .  strval($order) . '.jpg'; //儲存在資料庫的路徑
+                Storage::putFileAs('/public/image/product/' . $id . '/', $image['path'], $id . '_' . strval($order) . '.jpg');
+                $product_image = new ProductImage([
+                    'product_id' => $id,
+                    'path' => $path,
+                    'order' => $order,
 
-        Storage::putFileAs('/public/image/commodity/' . $id . '/',$image['path'], $id . '_' . strval($order) . '.jpg');
-        $product_image = new Product_image([
-            'product_id' => $id,
-            'path' => $path,
-            'order' => $order,
-            
-            ]);
-        $product_image->save();
+                ]);
+                $product_image->save();
+            } else {
+                throw ValidationException::withMessages([
+                    'field' => '請上傳image的格式',
+                ]);
+            }
+        } else {
+            throw ValidationException::withMessages(['field' => '請上傳相片']);
         }
-        
     }
 
-    public function update($id,$image,$order) {
-        if (!str_contains($image['path'],'../storage/image/commodity/') ) { //判斷是否有上傳照片
+    public function update($id, $image, $order)
+    {
+        if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
+            throw ValidationException::withMessages([
+                'field' => 'id輸入有誤',
+            ]);
+        }
+        if (!str_contains($image['path'], '../storage/image/product/')) { //判斷是否有替換照片
 
-          
-            Storage::delete('/public/image/commodity/' . $id . '/' . $id . '_' .  strval($order) . '.jpg');
-            Storage::putFileAs('/public/image/commodity/' . $id . '/', $image['path'], $id. '_' .  strval($order) . '.jpg');
-           }
-           
-           
+            if (str_contains($image['path'], 'image')) { //判斷是否為相片
+                Storage::delete('/public/image/product/' . $id . '/' . $id . '_' .  strval($order) . '.jpg');
+                Storage::putFileAs('/public/image/product/' . $id . '/', $image['path'], $id . '_' .  strval($order) . '.jpg');
+            } else {
+                throw ValidationException::withMessages([
+                    'field' => '請上傳image的格式',
+                ]);
+            }
+        }
     }
 
-    public function delete($id,$order) {
-         Product_image::where('product_id', $id)->where('order', $order)->delete();
- 
-       
-        Storage::delete('/public/image/commodity/' . $id . '/' . $id . '_' .  strval($order) . '.jpg');
-        
-     }
-    
+    public function delete($id, $order)
+    {
+        if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
+            throw ValidationException::withMessages([
+                'field' => 'id輸入有誤',
+            ]);
+        }
+        ProductImage::where('product_id', $id)->where('order', $order)->delete();
+
+
+        Storage::delete('/public/image/product/' . $id . '/' . $id . '_' .  strval($order) . '.jpg');
+    }
 }

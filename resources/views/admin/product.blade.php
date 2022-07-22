@@ -55,7 +55,7 @@
 
         </div>
 
-        <!-- <b-modal id="add-modal" centered @hide="resetInfoModal" size="lg">
+        <b-modal id="add-modal" centered @hide="resetInfoModal" size="lg">
             <template #modal-header="{ close }">
                 <h5>新增商品</h5>
                 <b-button variant="light" size="sm" class="mb-2" @click="close()">
@@ -65,8 +65,118 @@
 
 
             </template>
+            <b-row>
+                <b-col v-show="infoModal.currentImageNumber >= 1 " sm="3" class="image_upload" v-for="(item, index) in infoModal.image">
+
+                    <div class="uploader">
+                        <input type="file" class="fonts" :name="index" @change="afterRead(index)" :ref="index" accept="image/*" :id="index" />
+                    </div>
+                    <b-icon scale="2" icon="dash-square-fill" id="delimage" aria-hidden="true" @click="delImage(index)"></b-icon>
+
+                    <label :for="index" class="upload">
+                        <div class="laber-up">
+
+
+                            <b-img thumbnail fluid :src="item.path" alt="" srcset="" />
+                            </b-img>
+                        </div>
+                    </label>
+                </b-col>
+
+                <!-- 新增相片 -->
+                <b-col sm="3" v-show=" infoModal.currentImageNumber <= 7 ">
+                    <div class="uploader">
+                        <input type="file" class="fonts" :name="infoModal.currentImageNumber" @change="addImage(infoModal.currentImageNumber)" :ref="infoModal.currentImageNumber" accept="image/*" :id="infoModal.currentImageNumber" />
+                    </div>
+
+
+                    <label :for="infoModal.currentImageNumber" class="upload">
+                        <div class="laber-up">
+
+
+                            <div>
+                                <b-img v-bind="mainProps" thumbnail fluid>
+                                </b-img>
+                                <b-icon style="position:absolute;z-index:2" scale="2" icon="plus-lg" name="plus" />
+                                </b-icon>
+
+
+                            </div>
+                        </div>
+                    </label>
+
+
+                </b-col>
+
+            </b-row>
             <b-form @submit="addSubmit" id="form1">
-                <b-row>
+                <b-row class="my-5">
+                    <b-col sm="2" class="my-2">
+                        <label for="input-id">編號id:</label>
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+                        <b-form-input type="text" v-model='infoModal.id' id="input-id" placeholder="輸入商品編號" value="infoModal.id" ref="id" required></b-form-input>
+                    </b-col>
+
+
+
+
+                    <b-col sm="2" class="my-2">
+                        <label for="input-name">名稱:</label>
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+                        <b-form-input type="text" v-model='infoModal.name' id="input-name" placeholder="輸入商品名稱" value="infoModal.name" required></b-form-input>
+                    </b-col>
+                    <b-col sm="2" class="my-2">
+                        <label for="input-class">分類:</label>
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+                        <b-form-input type="text" v-model="infoModal.class" id="input-class" placeholder="輸入商品分類" value="infoModal.class"></b-form-input>
+
+                    </b-col>
+                    <b-col sm="2" class="my-2">
+                        <label for="input-content">內容:</label>
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+                        <b-form-textarea id="input-content" v-model="infoModal.content" max-rows="6" placeholder="輸入商品描述" value="infoModal.content"></b-form-textarea>
+                    </b-col>
+                    <b-col sm="2" class="my-2 ">
+                        <label for="input-price">價錢:</label>
+
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+                        <b-form-input type="number" min=1 id="input-price" v-model="infoModal.price" placeholder="輸入商品售價" value="infoModal.price" required></b-form-input>
+
+                    </b-col>
+
+                    <b-col sm="2" class="my-2">
+                        <label for="input-number">剩餘數量:</label>
+                    </b-col>
+                    <b-col sm="10" class="my-2">
+
+                        <b-form-input type="number" id="input-number" min=0 v-model="infoModal.number" placeholder="輸入商品剩餘數量" value="infoModal.number" required></b-form-input>
+
+
+                    </b-col>
+                    <b-col sm="2" class="my-2">
+                        <label for="input-status">商品狀態:</label>
+                    </b-col>
+                    <b-col sm="2" class="my-2">
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="S">上架</b-form-radio>
+
+
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="D">下架</b-form-radio>
+
+                        </b-form-group>
+
+                    </b-col>
+
+
+
+                </b-row>
+
+                <!-- <b-row>
 
                     <b-col class="image_upload" v-for="(value, key) in infoModal.image" :key="key">
                         <div class="uploader">
@@ -154,7 +264,7 @@
 
 
 
-                </b-row>
+                </b-row> -->
 
 
 
@@ -163,7 +273,7 @@
             </b-form>
             <template #modal-footer="{ ok, cancel }">
 
-             
+
                 <b-button size="sm" variant="secondary" @click="cancel()">
                     取消
                 </b-button>
@@ -173,10 +283,10 @@
 
             </template>
 
-        </b-modal> -->
+        </b-modal>
     </div>
 
-    <div  class="table__object">
+    <div class="table__object">
 
 
         <div>
@@ -257,9 +367,9 @@
 
             </template>
 
-            <b-row >
+            <b-row>
                 <b-col sm="3" class="image_upload" v-for="(item, index) in infoModal.image">
-                  
+
                     <div class="uploader">
                         <input type="file" class="fonts" :name="index" @change="afterRead(index)" :ref="index" accept="image/*" :id="index" />
                     </div>
@@ -274,9 +384,9 @@
                         </div>
                     </label>
                 </b-col>
-                
+
                 <!-- 新增相片 -->
-                <b-col sm="3"  v-show=" infoModal.currentImageNumber <= 7 ">
+                <b-col sm="3" v-show=" infoModal.currentImageNumber <= 7 ">
                     <div class="uploader">
                         <input type="file" class="fonts" :name="infoModal.currentImageNumber" @change="addImage(infoModal.currentImageNumber)" :ref="infoModal.currentImageNumber" accept="image/*" :id="infoModal.currentImageNumber" />
                     </div>
@@ -286,7 +396,7 @@
                         <div class="laber-up">
 
 
-                        <div>
+                            <div>
                                 <b-img v-bind="mainProps" thumbnail fluid>
                                 </b-img>
                                 <b-icon style="position:absolute;z-index:2" scale="2" icon="plus-lg" name="plus" />
@@ -297,16 +407,16 @@
                         </div>
                     </label>
 
-                  
+
                 </b-col>
 
             </b-row>
             <b-form @submit="onSubmit" id="form1">
 
                 <b-row class="my-5">
-               
 
-                    
+
+
 
                     <b-col sm="2" class="my-2">
                         <label for="input-name">名稱:</label>
@@ -436,7 +546,7 @@
                     number: null,
                     status: '',
                     image: [],
-                    currentImageNumber:null
+                    currentImageNumber: 0
 
 
                 }
@@ -496,7 +606,7 @@
             onSubmit(event) {
                 event.preventDefault()
                 if (this.infoModal.image.length == 0) {
-                    this.$bvModal.msgBoxOk('修改失敗，第一張圖片必須上傳', {
+                    this.$bvModal.msgBoxOk('修改失敗，至少上傳一張相片', {
                         title: '訊息',
                         size: 'sm',
                         buttonSize: 'sm',
@@ -508,38 +618,31 @@
                     return
 
                 }
-                
 
 
 
-                
+
+
                 console.log(this.infoModal);
-                this.axios.post('/update_product_save', this.infoModal).then(response => {
+                this.axios.post('/product/update', this.infoModal).then(response => {
                         console.log(response.data);
-
-                        // alert(response.data);
-                        if (response.data) {
-
-                            this.$bvModal.msgBoxOk('修改成功', {
-                                title: '訊息',
-                                size: 'sm',
-                                buttonSize: 'sm',
-                                okVariant: 'success',
-                                headerClass: 'p-2 border-bottom-0',
-                                footerClass: 'p-2 border-top-0',
-                                centered: true
-                            })
-
-
-                            this.allData();
-                        }
-
+                        this.$bvModal.msgBoxOk('修改成功', {
+                            title: '訊息',
+                            size: 'sm',
+                            buttonSize: 'sm',
+                            okVariant: 'success',
+                            headerClass: 'p-2 border-bottom-0',
+                            footerClass: 'p-2 border-top-0',
+                            centered: true
+                        })
+                        this.allData();
 
 
 
                     })
                     .catch(error => {
-                        this.$bvModal.msgBoxOk('修改失敗', {
+                        console.log(error.response);
+                        this.$bvModal.msgBoxOk('修改失敗，' + error.response.data.message, {
                             title: '訊息',
                             size: 'sm',
                             buttonSize: 'sm',
@@ -556,11 +659,11 @@
 
             allData() {
 
-                this.axios.get('/product_info').then(response => {
+                this.axios.get('/product').then(response => {
                     this.items = response.data;
 
                 });
-                
+
 
             },
 
@@ -574,15 +677,22 @@
                 this.infoModal.number = item.number
                 this.infoModal.status = item.status
                 this.infoModal.image = []
+                if (item.product_image == null) {
+                    this.infoModal.currentImageNumber = 0
+                } else {
+                    for (let x = 0; x < item.product_image.length; x++) {
+                        this.infoModal.image.push({
+                            path: item.product_image[x].path
+                        })
 
-                for (let x = 0; x < item.product_image.length ; x++) {
-                    this.infoModal.image.push({path: item.product_image[x].path})
+                    }
+                    this.infoModal.currentImageNumber = this.infoModal.image.length
                 }
-               
 
-                this.infoModal.currentImageNumber = this.infoModal.image.length 
-               
-                
+
+
+
+
 
                 this.$emit('bv::show::modal', 'edit-modal')
             },
@@ -597,7 +707,7 @@
                 this.infoModal.status = null
                 this.infoModal.image = []
                 this.infoModal.currentImageNumber = null
-                
+
                 // this.allData();
             },
             add() {
@@ -635,46 +745,32 @@
 
 
                 console.log(i);
-                this.axios.post('/delete_product', 'id=' + i).then(response => {
+                this.axios.post('/product/delete', 'id=' + i).then(response => {
                         console.log(response.data);
 
                         // alert(response.data);
-                        if (response.data.status == 'success') {
-
-                            this.$bvModal.msgBoxOk('刪除成功', {
-                                title: '訊息',
-                                size: 'sm',
-                                buttonSize: 'sm',
-                                okVariant: 'success',
-                                headerClass: 'p-2 border-bottom-0',
-                                footerClass: 'p-2 border-top-0',
-                                centered: true
-                            })
 
 
-                            this.allData();
-                        } else {
-
-                            this.$bvModal.msgBoxOk('刪除失敗，' + response.data.msg, {
-                                title: '訊息',
-                                size: 'sm',
-                                buttonSize: 'sm',
-                                okVariant: 'success',
-                                headerClass: 'p-2 border-bottom-0',
-                                footerClass: 'p-2 border-top-0',
-                                centered: true
-                            })
+                        this.$bvModal.msgBoxOk('刪除成功', {
+                            title: '訊息',
+                            size: 'sm',
+                            buttonSize: 'sm',
+                            okVariant: 'success',
+                            headerClass: 'p-2 border-bottom-0',
+                            footerClass: 'p-2 border-top-0',
+                            centered: true
+                        })
 
 
+                        this.allData();
 
-                        }
 
 
 
 
                     })
                     .catch(error => {
-                        this.$bvModal.msgBoxOk('刪除失敗' + response.data.msg, {
+                        this.$bvModal.msgBoxOk('刪除失敗' + error.response.data.message, {
                             title: '訊息',
                             size: 'sm',
                             buttonSize: 'sm',
@@ -687,8 +783,8 @@
             },
             addSubmit(event) {
                 event.preventDefault()
-                if (this.infoModal.image.path1 == null) {
-                    this.$bvModal.msgBoxOk('新增失敗，第一張圖片必須上傳', {
+                if (this.infoModal.image.length == 0) {
+                    this.$bvModal.msgBoxOk('新增失敗，至少上傳一張相片', {
                         title: '訊息',
                         size: 'sm',
                         buttonSize: 'sm',
@@ -700,57 +796,34 @@
                     return
 
                 }
-                console.log(this.$refs.id.$refs)
-                this.infoModal.id = this.$refs.id.$refs.input.value
 
-                this.infoModal.name = this.$refs.name.$refs.input.value
-                this.infoModal.class = this.$refs.class.$refs.input.value
-                this.infoModal.content = this.$refs.content.$refs.input.value
-                this.infoModal.price = this.$refs.price.$refs.input.value
-
-                this.infoModal.number = this.$refs.number.$refs.input.value
-                this.infoModal.status = this.infoModal.status
                 console.log(this.infoModal);
-                this.axios.post('/add_product_save', this.infoModal).then(response => {
+                this.axios.post('/product/add', this.infoModal).then(response => {
                         console.log(response.data);
 
                         // alert(response.data);
-                        if (response.data.status == 'success') {
-
-                            this.$bvModal.msgBoxOk('新增成功', {
-                                title: '訊息',
-                                size: 'sm',
-                                buttonSize: 'sm',
-                                okVariant: 'success',
-                                headerClass: 'p-2 border-bottom-0',
-                                footerClass: 'p-2 border-top-0',
-                                centered: true
-                            })
 
 
-                            this.allData();
-                        } else {
-
-                            this.$bvModal.msgBoxOk('新增失敗，' + response.data.msg, {
-                                title: '訊息',
-                                size: 'sm',
-                                buttonSize: 'sm',
-                                okVariant: 'success',
-                                headerClass: 'p-2 border-bottom-0',
-                                footerClass: 'p-2 border-top-0',
-                                centered: true
-                            })
+                        this.$bvModal.msgBoxOk('新增成功', {
+                            title: '訊息',
+                            size: 'sm',
+                            buttonSize: 'sm',
+                            okVariant: 'success',
+                            headerClass: 'p-2 border-bottom-0',
+                            footerClass: 'p-2 border-top-0',
+                            centered: true
+                        })
 
 
+                        this.allData();
 
-                        }
 
 
 
 
                     })
                     .catch(error => {
-                        this.$bvModal.msgBoxOk('新增失敗' + response.data.msg, {
+                        this.$bvModal.msgBoxOk('新增失敗' + error.response.data.message, {
                             title: '訊息',
                             size: 'sm',
                             buttonSize: 'sm',
@@ -779,7 +852,7 @@
 
                 let that = this;
 
-                
+
                 let file = this.$refs[index][0].files[0];
 
                 var reader = new FileReader();
@@ -791,30 +864,34 @@
                 };
 
             },
-            addImage(index){
-                
+            addImage(index) {
+
                 let that = this;
                 console.log(this.$refs);
 
-                
+
                 let file = this.$refs[index].files[0];
+
+                //that.infoModal.image.push({path:file,})
 
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
-                
+
                 reader.onload = function(e) {
-                    
-                    that.infoModal.image.push({path:this.result}); //顯示縮圖
-                    
+
+                    that.infoModal.image.push({
+                        path: this.result
+                    }); //顯示縮圖
+
 
                 }
-                this.infoModal.currentImageNumber +=1;
+                this.infoModal.currentImageNumber += 1;
             },
             delImage(index) {
-                
-                this.infoModal.image.splice(index,1)
-                this.infoModal.currentImageNumber -=1 
-                
+
+                this.infoModal.image.splice(index, 1)
+                this.infoModal.currentImageNumber -= 1
+
 
             },
             // ok(){

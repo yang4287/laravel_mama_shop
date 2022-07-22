@@ -19,7 +19,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -28,7 +28,14 @@ Route::get('/admin/product', function () {
     return view('admin.product');
 });
 
-Route::get('/product_info',[ProductController::class, 'index']);
-Route::post('/update_product_save',[ProductController::class, 'update']);
-Route::post('/add_product_save',[ProductController::class, 'add_commodity_save']);
-Route::post('/delete_product',[ProductController::class, 'delete_commodity']);
+
+// 商品CRUD
+Route::prefix('product')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+
+        Route::get('/', 'index');
+        Route::post('/update', 'update');
+        Route::post('/add', 'add');
+        Route::post('/delete', 'delete');
+    });
+});

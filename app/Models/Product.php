@@ -11,10 +11,11 @@ class Product extends Model
 
     protected $table="product";
     public $timestamps = false;
+    protected $fillable = ['id','class','name','content','number','price','status'];
 
-    public function product_image() #一個產品對到多個照片
+    public function productImage() #一個產品對到多個照片
     {
-        return $this->hasMany(Product_image::class);
+        return $this->hasMany(ProductImage::class);
 
     }
 
