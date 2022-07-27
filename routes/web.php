@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,23 +20,37 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
-//Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['web'])->group(function () {
 
+    Route::controller(LoginController::class)->group(function () {
 
-Route::get('/admin/product', function () {
-    return view('admin.product');
-});
+        Route::get('admin/login', 'index')->name('login');
 
+        Route::get('admin/logout', 'logout')->name('logout');
 
-// 商品CRUD
-Route::prefix('product')->group(function () {
-    Route::controller(ProductController::class)->group(function () {
+        Route::post('auth/logincheck', 'loginCheck')->name('loginCheck');
+    });
 
-        Route::get('/', 'index');
-        Route::post('/update', 'update');
-        Route::post('/add', 'add');
-        Route::post('/delete', 'delete');
+    Route::prefix('admin')->middleware('auth.login')->middleware('auth.level')->group(function () {
+
+        Route::get('/product', function () {
+
+            return view('admin.product');
+        });
+    });
+
+    // 商品CRUD
+    Route::prefix('product')->middleware('auth.login')->group(function () {
+        Route::controller(ProductController::class)->group(function () {
+
+            Route::get('/', 'index');
+            // Route::get('/{id}', 'index');
+            Route::middleware('auth.level')->group(function () {
+                Route::post('/update', 'update');
+                Route::post('/add', 'add');
+                Route::post('/delete', 'delete');
+            });
+        });
     });
 });

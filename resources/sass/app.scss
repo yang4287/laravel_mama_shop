@@ -118,25 +118,30 @@ html {
     // align-items: center;
     // justify-content: center;
 
+    .head {
+        //position: fixed;
 
+        z-index: 2;
+        padding: 1%;
+        font-size: 1.2em;
+        box-shadow: 1px 1px 6px 0px #0808080d;
+        width: 100%;
+        //height: 6vh;
+        margin: auto auto;
+        display: flex;
+        background-color: #ffffff;
+
+        flex-direction: row;
+        color: #333;
+        justify-content: flex-end;
+       
+    }
 
 }
 
-.head {
-    //position: fixed;
 
-    z-index: 2;
 
-    font-size: 1em;
-    //box-shadow: 1px 1px 6px 0px #0808080d;
-    width: 100%;
-    height: 6vh;
-    margin: auto auto;
-    display: flex;
-    background-color: #ffffff;
-    flex-direction: column;
 
-}
 
 .content {
     width: 98%;
@@ -151,25 +156,27 @@ html {
     // justify-content: center;
 
     position: relative;
+
     //.pager{position: absolute;bottom: 5%;}
     & div.topList>div>div.card {
-        box-shadow:4px 4px 12px 2px #cab4b487;
+        box-shadow: 4px 4px 12px 2px #cab4b487;
         border: none;
         border-radius: 15px;
         color: white;
         font-weight: 500;
         font-size: 1.8em;
-        &:hover{
-            filter:drop-shadow(0 0 0 black);
+
+        &:hover {
+            filter: drop-shadow(0 0 0 black);
 
             box-shadow: #94868647 4px 4px 12px 2px;
         }
     }
 
     & div.topList>div .card-text {
-       
+
         font-size: 1.5em;
-       
+
         text-align: center;
     }
 
@@ -185,7 +192,7 @@ html {
         display: flex;
         align-items: center;
         flex-direction: column;
-        box-shadow:8px 8px 14px 3px #ece1e1d6;
+        box-shadow: 8px 8px 14px 3px #ece1e1d6;
 
         i {
             display: none;

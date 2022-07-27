@@ -4,7 +4,7 @@
 namespace App\Http\Services;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\ValidationException;
 
 class ProductService {
     
@@ -14,11 +14,11 @@ class ProductService {
             'id' => 'required|unique:product',
           
         ]);
-        // if ( str_contains($id,'../') || str_contains(urlencode ( $id ),'..%2F')){
-        //     throw ValidationException::withMessages([
-        //         'field' => 'id輸入有誤',
-        //     ]);
-        // }
+        if ( str_contains($input['id'],'../') || str_contains(urlencode ($input['id']),'..%2F')){
+            throw ValidationException::withMessages([
+                'field' => 'id輸入有誤',
+            ]);
+        }
         $product = new Product([
             'id' => $input['id'],
             'name' =>$input['name'],
