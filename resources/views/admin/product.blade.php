@@ -150,11 +150,11 @@
                     </b-col>
 
                     <b-col sm="2" class="my-2">
-                        <label for="input-number">剩餘數量:</label>
+                        <label for="input-amount">剩餘數量:</label>
                     </b-col>
                     <b-col sm="10" class="my-2">
 
-                        <b-form-input type="number" id="input-number" min=0 v-model="infoModal.number" placeholder="輸入商品剩餘數量" value="infoModal.number" required></b-form-input>
+                        <b-form-input type="number" id="input-amount" min=0 v-model="infoModal.amount" placeholder="輸入商品剩餘數量" value="infoModal.amount" required></b-form-input>
 
 
                     </b-col>
@@ -536,14 +536,14 @@
 
                 infoModal: {
 
-                    id: null,
+                    product_id: null,
                     name: '',
                     class: '',
                     content: '',
                     price: null,
 
 
-                    number: null,
+                    amount: null,
                     status: '',
                     image: [],
                     currentImageNumber: 0
@@ -669,12 +669,12 @@
 
 
             info(item) {
-                this.infoModal.id = item.id
+                this.infoModal.id = item.product_id
                 this.infoModal.name = item.name
                 this.infoModal.class = item.class
                 this.infoModal.content = item.content
                 this.infoModal.price = item.price
-                this.infoModal.number = item.number
+                this.infoModal.amount = item.amount
                 this.infoModal.status = item.status
                 this.infoModal.image = []
                 if (item.product_image == null) {

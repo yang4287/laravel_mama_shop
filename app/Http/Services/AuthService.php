@@ -11,14 +11,14 @@ class AuthService {
 
     public function index($request) { 
         $request->validate([
-            'account' => ['required'],
+            'phone' => ['required'],
             'password' => ['required'],
         ]);
-        $account = Account::where('account_id', $request['account'])->first();
+        $account = Account::where('phone', $request['phone'])->first();
         
         if (is_null($account)) {
            
-            throw ValidationException::withMessages(['account' => '沒有此帳號']);
+            throw ValidationException::withMessages(['phone' => '此手機尚未註冊']);
        }
         if (!Hash::check( $request['password'], $account->password)) {
            
@@ -26,7 +26,7 @@ class AuthService {
         }
         
         $request->session()->flush();
-        $request->session()->put('account', $request['account']);        
+        $request->session()->put('name', $request['name']);        
         $request->session()->put('account_level', $account->level);
        
     }

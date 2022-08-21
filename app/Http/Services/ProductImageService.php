@@ -21,7 +21,7 @@ class ProductImageService
     {
 
         if (!is_null($image['path'])) { //判斷是否有上傳照片
-            if (str_contains($image['path'], 'image')) { //判斷是否為相片
+            if (str_contains($image['path'], 'image')) { //判斷是否為相片'../storage/image/product/1/1_1.jpg'
                 $path = '../storage/image/product/' . $id . '/' . $id . '_' .  strval($order) . '.jpg'; //儲存在資料庫的路徑
 
                 Storage::putFileAs('/public/image/product/' . $id . '/', $image['path'], $id . '_' . strval($order) . '.jpg');
@@ -62,7 +62,7 @@ class ProductImageService
         }
     }
 
-    public function delete($id, $order)
+    public function deleteOne($id, $order)
     {
         if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
             throw ValidationException::withMessages([
@@ -73,5 +73,16 @@ class ProductImageService
 
 
         Storage::delete('/public/image/product/' . $id . '/' . $id . '_' .  strval($order) . '.jpg');
+    }
+    public function deleteAll($id, $order)
+    {
+        if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
+            throw ValidationException::withMessages([
+                'field' => 'id輸入有誤',
+            ]);
+        }
+        ProductImage::destroy($id);
+
+        Storage::deleteDirectory('/public/image/product/'.$id);
     }
 }

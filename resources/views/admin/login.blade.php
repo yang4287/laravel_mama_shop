@@ -12,12 +12,12 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="account" class="col-md-4 col-form-label text-md-end">帳號</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-end">帳號</label>
 
                             <div class="col-md-6">
-                                <input id="account" type="account" class="form-control @error('account') is-invalid @enderror" name="account" value="{{ old('account') }}" required autocomplete autofocus>
+                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete autofocus>
 
-                                @error('account')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -10,14 +10,23 @@ class Account extends Model
     use HasFactory;
 
     protected $table="account";
-    protected $primaryKey = 'account_id';
     protected $fillable = [
         'name',
-        'email',
+        'phone',
         'password',
+        'status',
     ];
     
-   
+    public function cart() #一個帳戶對到一個購物車
+    {
+        return $this->hasOne(Cart::class,'account_id', 'account_id');
+
+    }
+    public function order() #一個帳戶對到多個訂單
+    {
+        return $this->hasMany(Order::class,'account_id', 'account_id');
+
+    }
 
     
 

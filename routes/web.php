@@ -41,7 +41,7 @@ Route::middleware(['web'])->group(function () {
     });
 
     // 商品CRUD
-    Route::prefix('product')->middleware('auth.login')->group(function () {
+    Route::prefix('product')->group(function () {
         Route::controller(ProductController::class)->group(function () {
 
             Route::get('/', 'index');

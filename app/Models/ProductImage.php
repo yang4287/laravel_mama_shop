@@ -11,9 +11,8 @@ class ProductImage extends Model
 
     protected $table="product_image";
     protected $fillable = ['product_id','path','order'];
-    public $timestamps = false;
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class,'product_id','product_id');
     }
 }

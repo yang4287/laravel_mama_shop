@@ -37,7 +37,7 @@ class ProductController extends Controller
     public function index() #所有商品資訊及相片
     {
 
-        $product = Product::with('productImage')->get();
+        $product = Product::with('productImage','productClass')->get();
 
 
         return response()->json($product);
@@ -71,7 +71,7 @@ class ProductController extends Controller
                     };
 
                     for ($i; $i <  count($oldImage); $i++) {
-                        $this->productServiceImage->delete($input['id'], $i + 1);
+                        $this->productServiceImage->deleteOne($input['id'], $i + 1);
                     };
                 } else {
                     for ($i = 0; $i < count($input['image']); $i++) {

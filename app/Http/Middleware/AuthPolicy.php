@@ -16,7 +16,7 @@ class AuthPolicy
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->session()->has('account')) {
+        if (!$request->session()->has('name')) {
         	
         		return redirect('/admin/login');
         	
