@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AuthPolicy
 {
@@ -16,9 +17,21 @@ class AuthPolicy
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->session()->has('name')) {
+        if (!Session::has('name')) {
         	
-        		return redirect('/admin/login');
+        		
+                if($request->is('admin/*')){ 
+                    return redirect('/admin/login');
+                }
+                else if($request->is('member/api/*')){
+                    return response()->json([
+                        'status' => 'fail',
+                        'msg' => '請先登入',
+                    ], 200);
+                }
+                else{
+                    return redirect('/member/login');
+                }
         	
           
         }

@@ -3,6 +3,8 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
+ require('./bootstrap');
  import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -15,13 +17,14 @@ import VueAxios from 'vue-axios'
  // Import Bootstrap and BootstrapVue CSS files (order is important)
  import 'bootstrap/dist/css/bootstrap.css'
  import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 Vue.use(VueAxios, axios)
  // Make BootstrapVue available throughout your project
  Vue.use(BootstrapVue)
  // Optionally install the BootstrapVue icon components plugin
  Vue.use(BootstrapVueIcons)
 
- window.Vue = require('axios').default;
+window.Vue = require('axios').default;
 
 window.Vue = require('vue').default;
 
@@ -45,5 +48,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 // const app = new Vue({
-//     el: '#app',
+//     el: '#app'
 // });

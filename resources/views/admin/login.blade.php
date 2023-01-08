@@ -1,10 +1,20 @@
 @extends('layouts.app')
+@section('title')
+MaMa好閒後台管理
+@endsection
+
+@section('title_href')
+<a class="navbar-brand" href="{{ url('admin/') }}">
+    MaMa好閒後台管理
+</a>
+@endsection
+
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card"> 
+            <div class="card">
                 <div class="card-header">管理員登入</div>
 
                 <div class="card-body">
@@ -18,9 +28,9 @@
                                 <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete autofocus>
 
                                 @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -32,14 +42,14 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
-                      
-                       
+
+
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
@@ -47,11 +57,11 @@
                                     登入
                                 </button>
 
-                                
+
                             </div>
                         </div>
                     </form>
-                </div> 
+                </div>
             </div>
         </div>
     </div>

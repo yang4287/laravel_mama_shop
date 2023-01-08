@@ -3,37 +3,44 @@
 
 namespace App\Http\Services;
 use App\Models\Product;
-use App\Models\ProductImage;
-use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Validation\ValidationException;
 
 class ProductService {
     
+    public function index() {
+        $product = Product::with('productImage:product_id,path')->with(['orderProduct'  => function ($query) {
+            $query->with(['order' => function ($query) {
+                $query->where('status', 5);
+            }])->groupby('product_id')->selectRaw('product_id, sum(amount) as soldSum');
+        }]);
+        return $product ;
+    }
 
     public function add($input) {
         $input->validate([
-            'id' => 'required|unique:product',
+            'product_id' => 'required|unique:product',
           
         ]);
-        if ( str_contains($input['id'],'../') || str_contains(urlencode ($input['id']),'..%2F')){
+        if ( str_contains($input['product_id'],'../') || str_contains(urlencode ($input['product_id']),'..%2F')){
             throw ValidationException::withMessages([
                 'field' => 'id輸入有誤',
             ]);
         }
         $product = new Product([
-            'product_id' => $input['id'],
-            'name' =>$input['name'],
-            'class' => $input['class'],
+
+            'product_id' => $input['product_id'],
+            'name' => $input['name'],
             'content' => $input['content'],
             'price' => $input['price'],
             'amount' => $input['amount'],
             'status' => $input['status'],
             ]);
-        $product->save();
+        return $product->save();
     }
 
     public function update($input) {
-        $product = Product::find($input['product_id']);
+        $product = Product::where('product_id', $input['product_id']);
         $product->name = $input['name'];
         $product->class = $input['class'];
         $product->content = $input['content'];
@@ -44,18 +51,14 @@ class ProductService {
         return $product->save();
     }
 
-    public function delete($id) { 
-        if (str_contains($id, '../') || str_contains(urlencode($id), '..%2F')) {
+    public function delete($product_id) { 
+        if (str_contains($product_id, '../') || str_contains(urlencode($product_id), '..%2F')) {
             throw ValidationException::withMessages([
                 'field' => 'id輸入有誤',
             ]);
         }
-      
-        Product::destroy($id);
-        
-        
-        Storage::deleteDirectory('/public/image/product/'.$id);
-        
+
+        Product::where('product_id', $product_id)->delete();
         
     }
    

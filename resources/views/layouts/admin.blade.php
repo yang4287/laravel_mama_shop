@@ -4,7 +4,7 @@
 
 <div class="right_container">
     <div class="head ">
-        <div>Hi，{{session('account')}} </div>
+        <div>Hi，{{session('name')}} </div>
         <div class="mx-2"><a href="/admin/logout" class="waves-effect waves-primary"><span> 登出 </span></a></div>
         
         

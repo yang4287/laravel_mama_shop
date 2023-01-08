@@ -24,6 +24,16 @@ class Product extends Model
         return $this->belongsTo(ProductClass::class,'product_id', 'product_id');
 
     }
+    public function orderProduct() #產品有多個訂單裡的產品
+    {
+        return $this->hasMany(OrderProduct::class,'product_id', 'product_id');
+
+    }
+    public function cartProduct() #產品有多個購物車的產品
+    {
+        return $this->hasMany(Cart::class,'product_id', 'product_id');
+
+    }
 
     
 }

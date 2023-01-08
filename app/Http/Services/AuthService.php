@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 class AuthService {
-    
-
+   
     public function index($request) { 
         $request->validate([
             'phone' => ['required'],
@@ -26,8 +25,11 @@ class AuthService {
         }
         
         $request->session()->flush();
-        $request->session()->put('name', $request['name']);        
+        $request->session()->put('name', $account->name);        
         $request->session()->put('account_level', $account->level);
+        $request->session()->put('account_id', $account->account_id);
+        
+   
        
     }
 

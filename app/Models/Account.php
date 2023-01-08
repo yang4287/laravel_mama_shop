@@ -11,10 +11,12 @@ class Account extends Model
 
     protected $table="account";
     protected $fillable = [
+        'account_id',
         'name',
         'phone',
         'password',
         'status',
+        'level',
     ];
     
     public function cart() #一個帳戶對到一個購物車

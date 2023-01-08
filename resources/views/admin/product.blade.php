@@ -115,7 +115,7 @@
                         <label for="input-id">編號id:</label>
                     </b-col>
                     <b-col sm="10" class="my-2">
-                        <b-form-input type="text" v-model='infoModal.id' id="input-id" placeholder="輸入商品編號" value="infoModal.id" ref="id" required></b-form-input>
+                        <b-form-input type="text" v-model='infoModal.product_id' id="input-id" placeholder="輸入商品編號" value="infoModal.product_id"  required></b-form-input>
                     </b-col>
 
 
@@ -163,10 +163,10 @@
                     </b-col>
                     <b-col sm="2" class="my-2">
                         <b-form-group v-slot="{ ariaDescribedby }">
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="S">上架</b-form-radio>
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="1">上架</b-form-radio>
 
 
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="D">下架</b-form-radio>
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="0">下架</b-form-radio>
 
                         </b-form-group>
 
@@ -176,95 +176,7 @@
 
                 </b-row>
 
-                <!-- <b-row>
-
-                    <b-col class="image_upload" v-for="(value, key) in infoModal.image" :key="key">
-                        <div class="uploader">
-
-                            <input v-if="key == 'path1'" type="file" class="fonts" :name="key" @change="afterRead(key)" :ref="key" accept="image/*" :id="key" />
-                            <input v-else type="file" class="fonts" :name="key" @change="afterRead(key)" :ref="key" accept="image/*" :id="key" />
-                        </div>
-                        <b-icon v-show="value" scale="2" icon="dash-square-fill" id="delimage" aria-hidden="true" @click="delImage(key)"></b-icon>
-                        <label :for="key" class="upload">
-                            <div class="laber-up">
-                                <div v-show="value">
-                                    <b-img thumbnail fluid :src="value" alt="" srcset="" />
-                                    </b-img>
-                                </div>
-                                <div v-show="!value">
-                                    <b-img v-bind="mainProps" thumbnail fluid>
-                                    </b-img>
-                                    <b-icon style="position:absolute;z-index:2" scale="2" icon="plus-lg" name="plus" />
-                                    </b-icon>
-
-
-                                </div>
-                            </div>
-                        </label>
-                    </b-col>
-
-
-                </b-row>
-
-
-                <b-row class="my-5">
-                    <b-col sm="2" class="my-2">
-                        <label for="input-id">編號id:</label>
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-                        <b-form-input type="text" id="input-id" placeholder="輸入商品編號" :value="infoModal.id" ref="id" required></b-form-input>
-                    </b-col>
-
-                    <b-col sm="2" class="my-2">
-                        <label for="input-name">名稱:</label>
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-                        <b-form-input type="text" id="input-name" placeholder="輸入商品名稱" :value="infoModal.name" ref="name" required></b-form-input>
-                    </b-col>
-                    <b-col sm="2" class="my-2">
-                        <label for="input-class">分類:</label>
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-                        <b-form-input type="text" id="input-class" placeholder="輸入商品分類" :value="infoModal.class" ref="class"></b-form-input>
-
-                    </b-col>
-                    <b-col sm="2" class="my-2">
-                        <label for="input-content">內容:</label>
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-                        <b-form-textarea id="input-content" max-rows="6" placeholder="輸入商品描述" :value="infoModal.content" ref="content"></b-form-textarea>
-                    </b-col>
-                    <b-col sm="2" class="my-2 ">
-                        <label for="input-price">價錢:</label>
-
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-                        <b-form-input type="number" min=1 id="input-price" placeholder="輸入商品售價" :value="infoModal.price" ref="price" required></b-form-input>
-
-                    </b-col>
-
-                    <b-col sm="2" class="my-2">
-                        <label for="input-number">剩餘數量:</label>
-                    </b-col>
-                    <b-col sm="10" class="my-2">
-
-                        <b-form-input type="number" id="input-number" min=0 max=2147483647 placeholder="輸入商品剩餘數量" :value="infoModal.number" ref="number" required></b-form-input>
-
-
-                    </b-col>
-                    <b-col sm="2" class="my-2">
-                        <label for="input-status">商品狀態:</label>
-                    </b-col>
-                    <b-col sm="2" class="my-2">
-                        <b-form-group v-slot="{ ariaDescribedby }">
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="S" required>上架</b-form-radio>
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="D" required>下架</b-form-radio>
-                        </b-form-group>
-                    </b-col>
-
-
-
-                </b-row> -->
+             
 
 
 
@@ -326,22 +238,23 @@
                     <b-row no-gutters>
 
                         <b-col class="col-1">
-                            @{{ i.id }}
+                            @{{ i.product_id }}
 
                         </b-col>
                         <b-col class="col-3">@{{ i.name }}</b-col>
-                        <b-col>@{{ i.class }}</b-col>
+                        <b-col>@{{ i.product_class.class }}</b-col>
                         <b-col>@{{ i.price }}</b-col>
-                        <b-col>@{{ i.soldNumber }}</b-col>
-                        <b-col>@{{ i.number }}</b-col>
+                        <b-col v-if = "i.order_product[0]">@{{ i.order_product[0].soldSum }}</b-col>
+                        <b-col v-else >0</b-col>
+                        <b-col>@{{ i.amount }}</b-col>
 
 
-                        <b-col v-if=" i.status == 'S' " style="color:green">上架中</b-col>
-                        <b-col v-if=" i.status == 'D' " style="color:red">已下架</b-col>
+                        <b-col v-if=" i.status == 1 " style="color:green">上架中</b-col>
+                        <b-col v-if=" i.status == 0 " style="color:red">已下架</b-col>
                         <b-col>
                             <b-button @click="info(i)" variant="dark" size="sm">編輯</b-button>
                             <!-- <b-button variant="secondary" size="sm">下架</b-button> -->
-                            <b-button @click="deleteAlert(i.id,i.name)" variant="danger" size="sm">刪除</b-button>
+                            <b-button @click="deleteAlert(i.product_id,i.name)" variant="danger" size="sm">刪除</b-button>
 
                         </b-col>
                     </b-row>
@@ -447,11 +360,11 @@
                     </b-col>
 
                     <b-col sm="2" class="my-2">
-                        <label for="input-number">剩餘數量:</label>
+                        <label for="input-amount">剩餘數量:</label>
                     </b-col>
                     <b-col sm="10" class="my-2">
 
-                        <b-form-input type="number" id="input-number" min=0 v-model="infoModal.number" placeholder="輸入商品剩餘數量" value="infoModal.number" required></b-form-input>
+                        <b-form-input type="number" id="input-amount" min=0 v-model="infoModal.amount" placeholder="輸入商品剩餘數量" value="infoModal.amount" required></b-form-input>
 
 
                     </b-col>
@@ -460,10 +373,10 @@
                     </b-col>
                     <b-col sm="2" class="my-2">
                         <b-form-group v-slot="{ ariaDescribedby }">
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="S">上架</b-form-radio>
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="1">上架</b-form-radio>
 
 
-                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="D">下架</b-form-radio>
+                            <b-form-radio v-model="infoModal.status" :aria-describedby="ariaDescribedby" value="0">下架</b-form-radio>
 
                         </b-form-group>
 
@@ -520,7 +433,7 @@
 
                 search: '',
                 sorting: -1,
-                type: 'id',
+                type: 'product_id',
                 soldOut: -1,
                 soldOut_number: null,
 
@@ -560,14 +473,14 @@
 
 
             sortItems: function() {
-                this.soldOut_number = this.items.filter(i => i.number == 0).length;
-                this.wellSellOut_number = this.items.filter(i => i.number < 10 && i.number > 0).length;
+                this.soldOut_number = this.items.filter(i => i.amount == 0).length;
+                this.wellSellOut_number = this.items.filter(i => i.amount < 10 && i.amount > 0).length;
                 this.items_number = this.items.length;
                 var focus = this.type;
                 if (this.search == '') {
                     if (this.wellSellOut == 1) {
                         var sort = this.items.slice(0).sort((a, b) => a[focus] < b[focus] ? this.sorting : -this.sorting);
-                        var wellSellOut_sort = sort.filter(i => i.number < 10 && i.number > 0);
+                        var wellSellOut_sort = sort.filter(i => i.amount < 10 && i.amount > 0);
                         var list = wellSellOut_sort.slice(this.showFromto, this.showUpto);
                         this.totalPage = Math.ceil(this.items.length / this.pageSize);
                         return list;
@@ -624,7 +537,7 @@
 
 
                 console.log(this.infoModal);
-                this.axios.post('/product/update', this.infoModal).then(response => {
+                this.axios.post('/admin/product/update', this.infoModal).then(response => {
                         console.log(response.data);
                         this.$bvModal.msgBoxOk('修改成功', {
                             title: '訊息',
@@ -659,7 +572,7 @@
 
             allData() {
 
-                this.axios.get('/product').then(response => {
+                this.axios.get('/admin/product/list').then(response => {
                     this.items = response.data;
 
                 });
@@ -669,9 +582,9 @@
 
 
             info(item) {
-                this.infoModal.id = item.product_id
+                this.infoModal.product_id = item.product_id
                 this.infoModal.name = item.name
-                this.infoModal.class = item.class
+                this.infoModal.class = item.product_class.class
                 this.infoModal.content = item.content
                 this.infoModal.price = item.price
                 this.infoModal.amount = item.amount
@@ -697,13 +610,13 @@
                 this.$emit('bv::show::modal', 'edit-modal')
             },
             resetInfoModal() {
-                this.infoModal.id = null
+                this.infoModal.product_id = null
                 this.infoModal.name = null
                 this.infoModal.class = null
                 this.infoModal.content = null
                 this.infoModal.price = null
                 this.infoModal.content = null
-                this.infoModal.number = null
+                this.infoModal.amount = null
                 this.infoModal.status = null
                 this.infoModal.image = []
                 this.infoModal.currentImageNumber = null
@@ -745,7 +658,7 @@
 
 
                 console.log(i);
-                this.axios.post('/product/delete', 'id=' + i).then(response => {
+                this.axios.post('/admin/product/delete', 'product_id=' + i).then(response => {
                         console.log(response.data);
 
                         // alert(response.data);
@@ -798,7 +711,7 @@
                 }
 
                 console.log(this.infoModal);
-                this.axios.post('/product/add', this.infoModal).then(response => {
+                this.axios.post('/admin/product/add', this.infoModal).then(response => {
                         console.log(response.data);
 
                         // alert(response.data);

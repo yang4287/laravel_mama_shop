@@ -12,6 +12,7 @@ class Order extends Model
     protected $table="order";
     
     protected $fillable = ['consignee_name','consignee_phone','consignee_address','except_date','total_amount','order_status'];
+    
 
     public function account() #訂單屬於帳戶
     {

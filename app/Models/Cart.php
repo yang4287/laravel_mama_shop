@@ -18,6 +18,12 @@ class Cart extends Model
         return $this->belongsTo(Account::class,'account_id', 'account_id');
 
     }
+    public function product() #購物車產品屬於產品
+    {
+        return $this->belongsTo(Product::class,'product_id', 'product_id');
+
+    }
+
 
 
     
