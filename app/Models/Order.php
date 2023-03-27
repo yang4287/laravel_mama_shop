@@ -11,12 +11,12 @@ class Order extends Model
 
     protected $table="order";
     
-    protected $fillable = ['consignee_name','consignee_phone','consignee_address','except_date','total_amount','order_status'];
+    protected $fillable = ['order_id','account_id','consignee_name','consignee_phone','consignee_address','except_date','total_amount','status'];
     
 
     public function account() #訂單屬於帳戶
     {
-        return $this->belongsTo(Account::class,'account_id', 'account_id');
+        return $this->belongsTo(User::class,'account_id', 'account_id');
 
     }
     public function orderProduct() #一個訂單對到多個產品

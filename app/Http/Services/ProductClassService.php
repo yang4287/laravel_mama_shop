@@ -29,7 +29,7 @@ class ProductClassService
 
     public function update($product_id, $class)
     {
-        $productClass = ProductClass::where('product_id', $product_id);
+        $productClass = ProductClass::where('product_id', $product_id)->first();
        
         $productClass->class = $class;
     

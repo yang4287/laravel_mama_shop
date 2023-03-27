@@ -107,4 +107,23 @@ class CartController extends Controller
             return response()->json(['error' => $e], 422);
         }
     }
+    public function checkAll(Request $request)
+    {
+        try {
+            $a = $this->cartService->checkAll();
+           
+            if (count($a) != 0){
+                return response()->json(['data'=>$a ,
+                'status' => '庫存夠',
+            ], 200);
+            }
+
+            return response()->json(['data'=>$a ,
+                'status' => 'success',
+            ], 200);
+        } catch (Exception $e) {
+
+            return response()->json(['error' => $e], 422);
+        }
+    }
 }

@@ -24,7 +24,7 @@ class SmsPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|unique:account|regex:/^(09)\d{8}$/ '  //^為開頭，$為結尾
+            'phone' => 'required|unique:users|regex:/^(09)\d{8}$/ '  //^為開頭，$為結尾
         ];
     }
     /**

@@ -12,12 +12,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    
 
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/d29afc01a5.js" crossorigin="anonymous"></script>
+   
+ 
 
 
     <!-- Styles -->
@@ -139,10 +141,17 @@
 
 
                 cartAmountSum: 0,
-                totalPrice:0,
-                carttotalPrice:0,
+                totalPrice: 0,
+                carttotalPrice: 0,
                 cartItems: null,
-                shipPrice : 0,
+                shipPrice: 0,
+                orderInfo: {
+                    consignee_name:'',
+                    consignee_phone:null,
+                    consignee_address:'',
+                    except_date:0
+
+                }
 
             }
         },
@@ -164,15 +173,15 @@
                     this.carttotalPrice = 0
                     this.totalPrice = 0
                     this.shipPrice = 0
-                    
+
                     for (let x = 0; x < this.cartItems.length; x++) {
                         this.cartAmountSum = this.cartItems[x].number + this.cartAmountSum
                         this.carttotalPrice = this.cartItems[x].product.price * this.cartItems[x].number + this.carttotalPrice
 
                     }
-                    if (this.cartAmountSum <=17 ){
+                    if (this.cartAmountSum <= 17 && this.cartAmountSum > 0) {
                         this.shipPrice = 160
-                    }else{
+                    } else if (this.cartAmountSum > 17) {
                         this.shipPrice = 225
                     }
 
@@ -183,7 +192,7 @@
 
             },
 
-            
+
 
 
             addCart(i) {
@@ -234,84 +243,84 @@
 
             },
             updateCart(i) {
-               //document.forms["cartForm"].submit().preventDefault;
-                if (i.number > i.product.amount ) {
-                    
-                    this.$bvModal.msgBoxOk('庫存不足，請少於'+i.product.amount, {
-                            title: '訊息',
-                            size: 'sm',
-                            buttonSize: 'sm',
-                            okVariant: 'success',
-                            headerClass: 'p-2 border-bottom-0',
-                            footerClass: 'p-2 border-top-0',
-                            centered: true
-                        })
-                        this.cartData();   
-                        return
-                } 
-                if (i.number <= 0 ) {
-                    
-                    this.$bvModal.msgBoxConfirm('確定移除 " ' + i.product.name + ' " ?', {
+                //document.forms["cartForm"].submit().preventDefault;
+                if (i.number > i.product.amount) {
+
+                    this.$bvModal.msgBoxOk('庫存不足，請少於' + i.product.amount, {
                         title: '訊息',
                         size: 'sm',
                         buttonSize: 'sm',
-                        okVariant: 'danger',
-                        okTitle: '確定',
-                        cancelTitle: '取消',
-                        footerClass: 'p-2',
-
+                        okVariant: 'success',
+                        headerClass: 'p-2 border-bottom-0',
+                        footerClass: 'p-2 border-top-0',
                         centered: true
                     })
-                    .then(value => {
-                        if (value) {
-                            this.deleteCart(i.product_id)
-                            return
-                        }
-
-                    })
                     this.cartData();
-                     
-                     return   
+                    return
+                }
+                if (i.number <= 0) {
+
+                    this.$bvModal.msgBoxConfirm('確定移除 " ' + i.product.name + ' " ?', {
+                            title: '訊息',
+                            size: 'sm',
+                            buttonSize: 'sm',
+                            okVariant: 'danger',
+                            okTitle: '確定',
+                            cancelTitle: '取消',
+                            footerClass: 'p-2',
+
+                            centered: true
+                        })
+                        .then(value => {
+                            if (value) {
+                                this.deleteCart(i.product_id)
+                                return
+                            }
+
+                        })
+                    this.cartData();
+
+                    return
 
                 }
-             
-                
-                this.axios.post('/member/api/cart/update', {
-                        'product_id': i.product_id,
-                        'number': i.number
-                    }).then(response => {
-                       
 
 
-                        this.cartData();
+                this.axios.patch('/member/api/cart/update', {
+                    'product_id': i.product_id,
+                    'number': i.number
+                }).then(response => {
 
 
 
+                    this.cartData();
 
 
-                    })
-                    
-                    
-                
+
+
+
+                })
+
+
+
 
 
             },
 
-            deleteCart(product_id){
-                this.axios.post('/member/api/cart/delete', {
-                        'product_id': product_id,
-                        
-                    }).then(response => {
-                       
+            deleteCart(product_id) {
+                this.axios.delete('/member/api/cart/delete', {
+                    'product_id': product_id,
 
-
-                        this.cartData();
+                }).then(response => {
 
 
 
+                    this.cartData();
 
 
-                    })
+
+
+
+                })
             },
             checkLogin() {
 
@@ -328,12 +337,11 @@
 
 
             },
-            
+           
 
 
         },
     }
-   
 </script>
 @else
 <script type="application/javascript">
@@ -370,10 +378,9 @@
 
         },
     }
-    
 </script>
 @endif
-<script  type="application/javascript">
+<script type="application/javascript">
     const shopApp = new Vue(shop)
     shopApp.$mount('#shop')
 </script>

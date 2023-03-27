@@ -12,6 +12,7 @@ class Product extends Model
     protected $table="product";
     
     protected $fillable = ['product_id','name','content','amount','price','status'];
+    protected $hidden = ['created_at','updated_at'];
     protected $with = ['productClass'];
 
     public function productImage() #一個產品對到多個照片

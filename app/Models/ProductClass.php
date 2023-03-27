@@ -12,6 +12,7 @@ class ProductClass extends Model
     protected $table="product_class";
     
     protected $fillable = ['product_id','class'];
+    protected $hidden = ['created_at','updated_at'];
 
     public function product() #一個分類，多個產品
     {

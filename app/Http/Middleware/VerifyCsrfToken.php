@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        //'http://yuhui.com/auth/logincheck'
+        '/order/checkCallback'
     ];
 }

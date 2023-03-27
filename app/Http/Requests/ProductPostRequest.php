@@ -30,7 +30,7 @@ class ProductPostRequest extends FormRequest
             //'content' => 'required',
             'amount' => 'required|integer|min:0|max:999999',
             'price' => 'required|integer|min:1|max:9999999',
-            'status' => 'required|string|min:1|max:1',
+            'status' => 'required|integer|min:0|max:1',
             'image.*.path' => 'required',
         ];
     }

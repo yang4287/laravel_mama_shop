@@ -12,6 +12,8 @@ use App\Http\Services\AuthService;
 class LoginController  extends Controller
 {
 
+    protected $authService;
+  
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
@@ -45,9 +47,11 @@ class LoginController  extends Controller
 
         try {
             $this->authService->index($request);
+            
+            
             return redirect('/admin/product');
         } catch (Exception $e) {
-
+            
             return redirect('/admin/login')->withErrors($e)->withInput();
         }
     }
@@ -55,10 +59,10 @@ class LoginController  extends Controller
     public function logout(Request $request)
     {
         if (session('account_level') != 0){
-            $request->session()->flush();
+            $this->authService->logout($request);
             return redirect('/');
         }
-        $request->session()->flush();
+        $this->authService->logout($request);
         return redirect('/admin/login');
     }
 }

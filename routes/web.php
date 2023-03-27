@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SmsController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +21,6 @@ use App\Http\Controllers\SmsController;
 Route::get('/', function () {
     return view('home');
 });
-
 
 Route::middleware(['web'])->group(function () {
 
@@ -54,8 +54,8 @@ Route::middleware(['web'])->group(function () {
 
             Route::get('/api/cart/list', 'index'); 
             Route::post('/api/cart/add', 'add'); 
-            Route::post('/api/cart/update', 'update'); 
-            Route::post('/api/cart/delete', 'delete'); 
+            Route::patch('/api/cart/update', 'update'); 
+            Route::delete('/api/cart/delete', 'delete'); 
             Route::get('/cart', function () {
 
                 return view('member.cart');
@@ -114,4 +114,13 @@ Route::middleware(['web'])->group(function () {
             Route::get('/{class}', 'shop_index');
         });
     });
+});
+Route::controller(CartController::class)->group(function () {
+
+    Route::get('/cart/checkAll', 'checkAll');
+});
+Route::controller(OrderController::class)->group(function () {
+
+    Route::post('/order', 'index');
+    Route::post('/order/checkCallback', 'checkCallback');
 });

@@ -11,8 +11,8 @@ class OrderProduct extends Model
 
     protected $table="order_product";
     
-    protected $fillable = ['product_id','amount'];
-
+    protected $fillable = ['order_id','product_id','price','amount'];
+    protected $hidden = ['created_at','updated_at'];
     protected $with = ['order'];
 
     public function order() #訂單產品屬於訂單
